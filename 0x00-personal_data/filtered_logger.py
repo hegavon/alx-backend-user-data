@@ -4,6 +4,8 @@ Module for filtering and logging PII fields
 """
 import re
 import logging
+import os
+import mysql.connector
 from typing import List
 
 # List of PII fields
@@ -64,6 +66,23 @@ def get_logger() -> logging.Logger:
     return logger
 
 
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Returns a connector to the database
+    """
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    return mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=db_name
+    )
+
+
 if __name__ == '__main__':
     print(filter_datum(["password", "date_of_birth"],
                        '***',
@@ -73,3 +92,12 @@ if __name__ == '__main__':
     logger = get_logger()
     logger.info("name=John;email=john.doe@example.com;password=123456;"
                 "date_of_birth=01/01/1970;")
+
+    # Testing database connection
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT COUNT(*) FROM users;")
+    for row in cursor:
+        print(row[0])
+    cursor.close()
+    db.close()
