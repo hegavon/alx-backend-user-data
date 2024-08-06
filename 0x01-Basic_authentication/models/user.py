@@ -2,8 +2,8 @@
 """ User module
 """
 import hashlib
-import re
 from models.base import Base
+
 
 class User(Base):
     """ User class
@@ -57,18 +57,3 @@ class User(Base):
             return "{}".format(self.last_name)
         else:
             return "{} {}".format(self.first_name, self.last_name)
-
-    @staticmethod
-    def validate_email(email: str) -> bool:
-        """ Validate the email format.
-
-        Args:
-            email (str): The email to validate.
-
-        Returns:
-            bool: True if valid, False otherwise.
-        """
-        if email is None:
-            return False
-        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-        return re.match(email_regex, email) is not None
