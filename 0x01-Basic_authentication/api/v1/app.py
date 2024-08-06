@@ -49,6 +49,12 @@ def status():
     return jsonify({"status": "OK"}), 200
 
 
+@app.route('/api/v1/unauthorized', methods=['GET'])
+def unauthorized_endpoint():
+    """Raises a 401 Unauthorized error for testing"""
+    abort(401)
+
+
 if __name__ == '__main__':
     app.run(host=getenv('API_HOST', '0.0.0.0'),
             port=int(getenv('API_PORT', 5000)))
