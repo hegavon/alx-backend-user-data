@@ -3,9 +3,13 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 from os import getenv
+from api.v1.views import app_views  # Import the blueprint
 
 app = Flask(__name__)
 CORS(app)
+
+# Register the blueprint with the Flask app
+app.register_blueprint(app_views, url_prefix='/api/v1')
 
 AUTH_TYPE = getenv('AUTH_TYPE', 'auth')
 if AUTH_TYPE == 'basic_auth':

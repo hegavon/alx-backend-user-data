@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-""" Initialize views module
-"""
+""" Module of Index views """
 from flask import Blueprint
-from api.v1.views.index import *
 
-app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
+app_views = Blueprint('app_views', __name__)
 
-# Delayed imports to avoid circular import issues
+# Import the views after defining the blueprint to avoid circular imports
+from api.v1.views.index import *  # noqa
