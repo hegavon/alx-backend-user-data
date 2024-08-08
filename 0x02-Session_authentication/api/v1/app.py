@@ -15,7 +15,7 @@ from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 from api.v1.auth.session_auth import SessionAuth
 from api.v1.auth.session_exp_auth import SessionExpAuth
-from api.v1.auth.session_db_auth import SessionDBAuth
+from api.v1.auth.session_db_auth import SessionDBAuth 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -63,20 +63,23 @@ def bef_req():
 
 
 @app.errorhandler(404)
-def not_found() -> str:
-    """Not found handler"""
+def not_found(error) -> str:
+    """ Not found handler
+    """
     return jsonify({"error": "Not found"}), 404
 
 
 @app.errorhandler(401)
-def unauthorized() -> str:
-    """Request unauthorized handler"""
+def unauthorized(error) -> str:
+    """ Request unauthorized handler
+    """
     return jsonify({"error": "Unauthorized"}), 401
 
 
 @app.errorhandler(403)
-def forbidden() -> str:
-    """Request forbidden handler"""
+def forbidden(error) -> str:
+    """ Request unauthorized handler
+    """
     return jsonify({"error": "Forbidden"}), 403
 
 
