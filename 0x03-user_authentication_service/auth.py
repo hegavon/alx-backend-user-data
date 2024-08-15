@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-# auth.py
+"""
+Auth module to interact with the authentication database.
+"""
 
 import bcrypt
 from db import DB
